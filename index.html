@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UI UX Pro Max — дизайн-интеллект для AI-ассистентов</title>
+<meta name="description" content="UI UX Pro Max — поисковая база из 60+ UI-стилей, 97 палитр, 161 шрифтовой пары и UX-гайдлайнов. Одна команда в терминале — и твой AI-агент проектирует как senior-дизайнер.">
+<meta name="theme-color" content="#06060b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%238b5cf6'/%3E%3Cstop offset='.5' stop-color='%23e879f9'/%3E%3Cstop offset='1' stop-color='%2322d3ee'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='26' font-weight='bold' fill='white' text-anchor='middle'%3EUX%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --bg:#06060b;
+  --bg-soft:#0a0a14;
+  --panel:rgba(255,255,255,.035);
+  --panel-2:rgba(255,255,255,.06);
+  --border:rgba(255,255,255,.09);
+  --border-2:rgba(255,255,255,.16);
+  --text:#f3f3f8;
+  --muted:#a1a1b6;
+  --faint:#6f6f85;
+  --violet:#8b5cf6;
+  --fuchsia:#e879f9;
+  --cyan:#22d3ee;
+  --lime:#a3e635;
+  --amber:#fbbf24;
+  --grad:linear-gradient(100deg,#8b5cf6 0%,#e879f9 46%,#22d3ee 100%);
+  --grad-soft:linear-gradient(100deg,rgba(139,92,246,.18),rgba(232,121,249,.14),rgba(34,211,238,.16));
+  --radius:22px;
+  --shadow:0 40px 90px -40px rgba(0,0,0,.9);
+  --ring:0 0 0 1px rgba(255,255,255,.06);
+  --font:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;
+  --display:'Space Grotesk',var(--font);
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --serif:'Playfair Display',Georgia,serif;
+  --maxw:1180px;
+}
+[data-theme="light"]{
+  --bg:#f4f4f8;
+  --bg-soft:#ffffff;
+  --panel:rgba(12,12,32,.028);
+  --panel-2:rgba(12,12,32,.055);
+  --border:rgba(12,12,40,.10);
+  --border-2:rgba(12,12,40,.20);
+  --text:#0d0d1c;
+  --muted:#4f5068;
+  --faint:#7c7d95;
+  --shadow:0 30px 70px -35px rgba(24,24,80,.28);
+  --ring:0 0 0 1px rgba(12,12,40,.04);
+}
+
+/* ============ BASE ============ */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:var(--font);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  transition:background .5s ease,color .5s ease;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+::selection{background:rgba(139,92,246,.4);color:#fff}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.08;margin:0;letter-spacing:-.02em}
+p{margin:0}
+.wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:24px;position:relative;z-index:2}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mono{font-family:var(--mono)}
+
+/* ============ BACKGROUND FX ============ */
+.fx{position:fixed;inset:0;pointer-events:none;z-index:0}
+.fx-grid{
+  background-image:linear-gradient(to right,var(--border) 1px,transparent 1px),
+                   linear-gradient(to bottom,var(--border) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 10%,transparent 75%);
+          mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 10%,transparent 75%);
+  opacity:.55;
+}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;will-change:transform}
+.blob-1{width:52vw;height:52vw;left:-14vw;top:-18vw;background:radial-gradient(circle,#7c3aed,transparent 62%);animation:drift1 26s ease-in-out infinite alternate}
+.blob-2{width:44vw;height:44vw;right:-12vw;top:-6vw;background:radial-gradient(circle,#db2777,transparent 62%);animation:drift2 32s ease-in-out infinite alternate}
+.blob-3{width:40vw;height:40vw;left:32vw;top:34vh;background:radial-gradient(circle,#0891b2,transparent 62%);animation:drift3 38s ease-in-out infinite alternate}
+[data-theme="light"] .blob{opacity:.22}
+@keyframes drift1{to{transform:translate3d(9vw,7vh,0) scale(1.12)}}
+@keyframes drift2{to{transform:translate3d(-8vw,10vh,0) scale(.9)}}
+@keyframes drift3{to{transform:translate3d(6vw,-9vh,0) scale(1.08)}}
+.fx-noise{
+  opacity:.035;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+#spotlight{
+  position:fixed;width:620px;height:620px;border-radius:50%;pointer-events:none;z-index:1;
+  background:radial-gradient(circle,rgba(139,92,246,.13),transparent 60%);
+  transform:translate(-50%,-50%);left:50%;top:0;opacity:0;transition:opacity .6s ease;
+}
+#progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--grad);z-index:100}
+
+/* ============ NAV ============ */
+header.nav{position:sticky;top:0;z-index:60;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  background:var(--bg);background:color-mix(in srgb,var(--bg) 72%,transparent);border-bottom:1px solid transparent;transition:.35s}
+header.nav.scrolled{border-bottom-color:var(--border);background:var(--bg);background:color-mix(in srgb,var(--bg) 86%,transparent)}
+.nav-in{display:flex;align-items:center;gap:18px;height:70px}
+.brand{display:flex;align-items:center;gap:11px;font-family:var(--display);font-weight:700;font-size:17px;letter-spacing:-.01em}
+.brand-mark{width:34px;height:34px;border-radius:11px;background:var(--grad);display:grid;place-items:center;
+  box-shadow:0 8px 26px -8px rgba(139,92,246,.85);flex:none}
+.brand-mark svg{width:19px;height:19px}
+.brand small{display:block;font-family:var(--font);font-weight:500;font-size:10.5px;color:var(--faint);letter-spacing:.14em;text-transform:uppercase;margin-top:-3px}
+.nav-links{display:flex;gap:4px;margin-left:14px}
+.nav-links a{padding:8px 13px;border-radius:10px;font-size:14.5px;color:var(--muted);font-weight:500;transition:.2s;position:relative}
+.nav-links a:hover{color:var(--text);background:var(--panel)}
+.nav-links a.active{color:var(--text)}
+.nav-links a.active::after{content:"";position:absolute;left:13px;right:13px;bottom:2px;height:2px;border-radius:2px;background:var(--grad)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.icon-btn{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;border:1px solid var(--border);
+  background:var(--panel);color:var(--muted);transition:.22s}
+.icon-btn:hover{color:var(--text);border-color:var(--border-2);transform:translateY(-1px)}
+.icon-btn svg{width:17px;height:17px}
+.lang-switch{display:flex;border:1px solid var(--border);border-radius:11px;overflow:hidden;background:var(--panel)}
+.lang-switch button{padding:0 11px;height:38px;font-size:12.5px;font-weight:600;color:var(--faint);transition:.2s;letter-spacing:.03em}
+.lang-switch button.on{background:var(--grad);color:#fff}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:44px;padding:0 22px;border-radius:13px;
+  font-weight:600;font-size:14.5px;transition:.25s;white-space:nowrap}
+.btn svg{width:16px;height:16px}
+.btn-primary{background:var(--grad);color:#fff;box-shadow:0 14px 40px -12px rgba(139,92,246,.8)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 20px 46px -12px rgba(139,92,246,.95)}
+.btn-ghost{border:1px solid var(--border-2);background:var(--panel);color:var(--text)}
+.btn-ghost:hover{background:var(--panel-2);transform:translateY(-2px)}
+.btn-sm{height:38px;padding:0 16px;font-size:13.5px;border-radius:11px}
+.burger{display:none}
+@media(max-width:940px){
+  .nav-links{display:none}
+  .burger{display:grid}
+}
+.mobile-menu{display:none;border-top:1px solid var(--border);background:var(--bg);background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(18px)}
+.mobile-menu.open{display:block}
+.mobile-menu a{display:block;padding:14px 24px;font-weight:500;color:var(--muted);border-bottom:1px solid var(--border)}
+.mobile-menu a:last-child{border-bottom:0}
+@media(min-width:941px){.mobile-menu{display:none!important}}
+
+/* ============ HERO ============ */
+.hero{padding:76px 0 40px;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}
+@media(max-width:980px){.hero-grid{grid-template-columns:1fr;gap:44px}}
+.pill{display:inline-flex;align-items:center;gap:9px;padding:7px 15px 7px 11px;border-radius:100px;
+  border:1px solid var(--border);background:var(--panel);font-size:13px;color:var(--muted);font-weight:500}
+.pill b{color:var(--text);font-weight:600}
+.pill .dot{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px rgba(163,230,53,.18);animation:pulse 2.4s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 8px rgba(163,230,53,0)}}
+.hero h1{font-size:clamp(38px,5.6vw,68px);font-weight:700;margin:24px 0 22px;letter-spacing:-.035em}
+.hero h1 .line{display:block}
+.hero-sub{font-size:clamp(15.5px,1.7vw,18.5px);color:var(--muted);max-width:560px;margin-bottom:32px}
+.hero-sub b{color:var(--text);font-weight:600}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:34px}
+.hero-meta{display:flex;gap:26px;flex-wrap:wrap;color:var(--faint);font-size:13.5px}
+.hero-meta span{display:flex;align-items:center;gap:7px}
+.hero-meta svg{width:15px;height:15px;color:var(--lime);flex:none}
+
+/* terminal */
+.term{border-radius:18px;overflow:hidden;border:1px solid var(--border-2);background:#0a0a13;
+  box-shadow:var(--shadow);font-family:var(--mono);font-size:13.2px;transform:perspective(1400px) rotateY(-6deg) rotateX(2deg);
+  transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.term:hover{transform:perspective(1400px) rotateY(-2deg) rotateX(0deg) translateY(-4px)}
+@media(max-width:980px){.term{transform:none}}
+.term-bar{display:flex;align-items:center;gap:8px;padding:12px 15px;background:#12121d;border-bottom:1px solid rgba(255,255,255,.07)}
+.term-dots{display:flex;gap:6px}
+.term-dots i{width:11px;height:11px;border-radius:50%;display:block}
+.term-dots i:nth-child(1){background:#ff5f57}.term-dots i:nth-child(2){background:#febc2e}.term-dots i:nth-child(3){background:#28c840}
+.term-title{color:#6f6f85;font-size:11.5px;margin-left:6px}
+.term-body{padding:18px 18px 20px;color:#c9c9dd;line-height:1.85;min-height:266px}
+.term-body .ps1{color:#22d3ee}
+.term-body .cmd{color:#f3f3f8}
+.term-body .cursor{display:inline-block;width:8px;height:15px;background:#e879f9;vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.tline{opacity:0;transform:translateY(6px);transition:.4s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tline.show{opacity:1;transform:none}
+.tline .tag{color:#8b5cf6;font-weight:600}
+.tline .name{color:#f3f3f8}
+.tline .num{color:#a3e635}
+.tline .dim{color:#6f6f85}
+.tline .ok{color:#22d3ee}
+@media(max-width:520px){.term-body{font-size:11.4px}}
+
+/* ============ MARQUEE ============ */
+.marquee-sec{padding:34px 0 8px}
+.marquee-label{text-align:center;color:var(--faint);font-size:12px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:20px;font-weight:600}
+.marquee{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.marquee-track{display:flex;gap:14px;width:max-content;animation:marquee 34s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.chip-logo{display:flex;align-items:center;gap:9px;padding:10px 18px;border-radius:100px;border:1px solid var(--border);
+  background:var(--panel);font-family:var(--display);font-weight:600;font-size:14.5px;color:var(--muted);white-space:nowrap}
+.chip-logo i{width:8px;height:8px;border-radius:3px;background:var(--grad);display:block}
+
+/* ============ SECTIONS ============ */
+section{padding:88px 0;position:relative}
+.sec-head{max-width:660px;margin-bottom:52px}
+.sec-head.center{margin-inline:auto;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:16px}
+.sec-head h2{font-size:clamp(28px,3.6vw,44px);font-weight:700;margin-bottom:16px;letter-spacing:-.03em}
+.sec-head p{color:var(--muted);font-size:16.5px}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:820px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{padding:26px 22px;border-radius:18px;border:1px solid var(--border);background:var(--panel);position:relative;overflow:hidden}
+.stat::after{content:"";position:absolute;inset:0;background:var(--grad-soft);opacity:0;transition:.4s}
+.stat:hover::after{opacity:1}
+.stat-num{font-family:var(--display);font-size:clamp(30px,3.6vw,42px);font-weight:700;letter-spacing:-.03em;position:relative}
+.stat-num span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat-label{color:var(--faint);font-size:13.5px;margin-top:6px;position:relative}
+
+/* bento */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.card{border-radius:20px;border:1px solid var(--border);background:var(--panel);padding:26px;position:relative;overflow:hidden;
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .35s,background .35s}
+.card:hover{border-color:var(--border-2);background:var(--panel-2)}
+.card .glow{position:absolute;width:260px;height:260px;border-radius:50%;filter:blur(70px);opacity:0;transition:.5s;
+  background:radial-gradient(circle,rgba(139,92,246,.4),transparent 65%);pointer-events:none}
+.card:hover .glow{opacity:.55}
+.card-ico{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;margin-bottom:18px;
+  background:var(--grad-soft);border:1px solid var(--border);color:var(--text)}
+.card-ico svg{width:21px;height:21px}
+.card h3{font-size:19px;margin-bottom:9px;font-weight:600}
+.card p{color:var(--muted);font-size:14.6px}
+.span2{grid-column:span 2}.span3{grid-column:span 3}.span4{grid-column:span 4}
+@media(max-width:900px){.span2,.span3,.span4{grid-column:span 6}}
+.tagrow{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+.tagrow span{font-family:var(--mono);font-size:11.4px;padding:4px 9px;border-radius:7px;background:var(--panel-2);
+  border:1px solid var(--border);color:var(--muted)}
+
+/* ============ DEMO SEARCH ============ */
+.demo-shell{border-radius:24px;border:1px solid var(--border);background:var(--bg-soft);background:color-mix(in srgb,var(--bg-soft) 82%,transparent);
+  backdrop-filter:blur(14px);box-shadow:var(--shadow);overflow:hidden}
+.demo-bar{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--border)}
+.demo-bar svg{width:19px;height:19px;color:var(--faint);flex:none}
+.demo-bar input{flex:1;background:none;border:0;outline:0;color:var(--text);font-size:15.5px;font-family:var(--font);min-width:0}
+.demo-bar input::placeholder{color:var(--faint)}
+.demo-hint{font-family:var(--mono);font-size:11.5px;color:var(--faint);border:1px solid var(--border);padding:3px 8px;border-radius:7px;white-space:nowrap}
+.chips{display:flex;gap:9px;flex-wrap:wrap;padding:14px 18px;border-bottom:1px solid var(--border)}
+.chip{padding:7px 14px;border-radius:100px;border:1px solid var(--border);background:var(--panel);font-size:13.2px;
+  color:var(--muted);font-weight:500;transition:.22s}
+.chip:hover{color:var(--text);border-color:var(--border-2);transform:translateY(-1px)}
+.chip.on{background:var(--grad);color:#fff;border-color:transparent}
+.results{padding:18px;display:grid;gap:12px;min-height:220px}
+.res{display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:16px;border-radius:16px;
+  border:1px solid var(--border);background:var(--panel);animation:pop .45s cubic-bezier(.2,.8,.2,1) both}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}}
+.res:hover{border-color:var(--border-2)}
+.res-swatch{display:flex;border-radius:10px;overflow:hidden;width:64px;height:44px;flex:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.res-swatch i{flex:1}
+.res-name{font-family:var(--display);font-weight:600;font-size:16px;display:flex;align-items:center;gap:9px}
+.res-desc{color:var(--muted);font-size:13.6px;margin-top:3px}
+.res-prompt{font-family:var(--mono);font-size:11.8px;color:var(--faint);margin-top:7px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:min(56vw,520px)}
+.res-match{font-family:var(--mono);font-size:12.5px;color:var(--lime);white-space:nowrap}
+.skel{padding:16px;border-radius:16px;border:1px solid var(--border);background:var(--panel)}
+.skel i{display:block;height:12px;border-radius:6px;background:linear-gradient(90deg,var(--panel-2),var(--border-2),var(--panel-2));
+  background-size:200% 100%;animation:shim 1.2s infinite;margin-bottom:9px}
+.skel i:last-child{width:55%;margin-bottom:0}
+@keyframes shim{to{background-position:-200% 0}}
+.empty{text-align:center;color:var(--faint);padding:52px 0;font-size:14.5px}
+@media(max-width:640px){.res{grid-template-columns:auto 1fr}.res-match{grid-column:2;justify-self:start}.res-prompt{display:none}}
+
+/* ============ PALETTE ============ */
+.pal-controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
+.pal-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+@media(max-width:760px){.pal-grid{grid-template-columns:repeat(2,1fr)}}
+.sw{border-radius:18px;overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:.3s;position:relative}
+.sw:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.sw-color{height:120px;transition:height .3s}
+.sw:hover .sw-color{height:132px}
+.sw-meta{padding:12px 14px;background:var(--panel);display:flex;justify-content:space-between;align-items:center;gap:6px}
+.sw-hex{font-family:var(--mono);font-size:12.4px;font-weight:500}
+.sw-role{font-size:10.6px;color:var(--faint);text-transform:uppercase;letter-spacing:.09em}
+.pal-code{margin-top:18px;border-radius:16px;border:1px solid var(--border);background:var(--panel);padding:16px 18px;
+  font-family:var(--mono);font-size:12.6px;color:var(--muted);display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap}
+.pal-code b{color:var(--text);font-weight:500}
+
+/* ============ FONTS ============ */
+.fonts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:900px){.fonts-grid{grid-template-columns:1fr}}
+.font-card{border-radius:20px;border:1px solid var(--border);background:var(--panel);padding:28px;transition:.35s;position:relative;overflow:hidden}
+.font-card:hover{transform:translateY(-4px);border-color:var(--border-2)}
+.font-aa{font-size:76px;line-height:1;font-weight:700;letter-spacing:-.04em;margin-bottom:18px}
+.font-name{font-family:var(--display);font-weight:600;font-size:17px}
+.font-role{color:var(--faint);font-size:12.6px;margin-bottom:14px}
+.font-sample{font-size:14.6px;color:var(--muted);border-top:1px solid var(--border);padding-top:14px;margin-top:14px}
+.font-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}
+.font-tags span{font-size:11.2px;padding:3px 9px;border-radius:6px;background:var(--panel-2);border:1px solid var(--border);color:var(--muted)}
+.fc1 .font-aa{font-family:'Space Grotesk',sans-serif;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.fc2 .font-aa{font-family:'Playfair Display',serif;font-style:italic;font-weight:600}
+.fc3 .font-aa{font-family:'JetBrains Mono',monospace;font-size:58px}
+
+/* ============ STEPS / INSTALL ============ */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:34px}
+@media(max-width:820px){.steps{grid-template-columns:1fr}}
+.step{padding:24px;border-radius:18px;border:1px solid var(--border);background:var(--panel);position:relative}
+.step-n{font-family:var(--display);font-size:13px;font-weight:700;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
+  background:var(--grad);color:#fff;margin-bottom:14px}
+.step h4{font-size:17px;margin-bottom:7px;font-weight:600}
+.step p{color:var(--muted);font-size:14.2px}
+.code-box{border-radius:20px;border:1px solid var(--border-2);background:#0a0a13;overflow:hidden;box-shadow:var(--shadow)}
+.code-tabs{display:flex;border-bottom:1px solid rgba(255,255,255,.07);overflow-x:auto}
+.code-tabs button{padding:13px 20px;font-family:var(--mono);font-size:12.6px;color:#7c7d95;white-space:nowrap;transition:.2s;border-bottom:2px solid transparent}
+.code-tabs button.on{color:#fff;border-bottom-color:#e879f9;background:rgba(232,121,249,.07)}
+.code-body{position:relative}
+.code-body pre{margin:0;padding:22px 24px;overflow-x:auto;font-family:var(--mono);font-size:13.2px;line-height:1.85;color:#c9c9dd}
+.code-body .c{color:#5c5c72}.code-body .s{color:#a3e635}.code-body .k{color:#e879f9}.code-body .f{color:#22d3ee}
+.copy-btn{position:absolute;top:14px;right:14px;padding:7px 13px;border-radius:9px;border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.06);color:#c9c9dd;font-size:12.3px;display:flex;align-items:center;gap:7px;transition:.2s}
+.copy-btn:hover{background:rgba(255,255,255,.13);color:#fff}
+.copy-btn svg{width:13px;height:13px}
+
+/* ============ FAQ ============ */
+.faq{max-width:820px;margin-inline:auto;display:grid;gap:12px}
+.qa{border:1px solid var(--border);border-radius:16px;background:var(--panel);overflow:hidden;transition:border-color .3s}
+.qa.open{border-color:var(--border-2)}
+.qa-q{width:100%;display:flex;align-items:center;gap:16px;padding:19px 22px;text-align:left;font-family:var(--display);
+  font-weight:600;font-size:16.2px}
+.qa-q .plus{margin-left:auto;flex:none;width:26px;height:26px;border-radius:8px;border:1px solid var(--border);display:grid;place-items:center;transition:.3s;color:var(--muted)}
+.qa.open .plus{transform:rotate(45deg);background:var(--grad);color:#fff;border-color:transparent}
+.qa-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .38s cubic-bezier(.2,.8,.2,1)}
+.qa.open .qa-a{grid-template-rows:1fr}
+.qa-a>div{overflow:hidden}
+.qa-a p{padding:0 22px 20px;color:var(--muted);font-size:14.8px}
+
+/* ============ CTA + FOOTER ============ */
+.cta{border-radius:28px;padding:64px 40px;text-align:center;position:relative;overflow:hidden;
+  border:1px solid var(--border-2);background:var(--bg-soft)}
+.cta::before{content:"";position:absolute;inset:-40%;background:conic-gradient(from 0deg,transparent 60%,rgba(139,92,246,.22),rgba(34,211,238,.18),transparent);
+  animation:spin 14s linear infinite}
+@keyframes spin{to{transform:rotate(1turn)}}
+.cta>*{position:relative}
+.cta h2{font-size:clamp(28px,4vw,46px);margin-bottom:16px}
+.cta p{color:var(--muted);max-width:520px;margin:0 auto 30px;font-size:16.5px}
+footer{border-top:1px solid var(--border);padding:56px 0 34px;margin-top:40px}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:36px;margin-bottom:44px}
+@media(max-width:820px){.foot-grid{grid-template-columns:1fr 1fr}}
+.foot-grid h5{font-family:var(--display);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:0 0 16px;font-weight:700}
+.foot-grid a{display:block;color:var(--muted);font-size:14.2px;padding:5px 0;transition:.2s}
+.foot-grid a:hover{color:var(--text)}
+.foot-bottom{border-top:1px solid var(--border);padding-top:26px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  color:var(--faint);font-size:13.2px}
+.heart{color:#e879f9}
+
+/* ============ REVEAL / MISC ============ */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+#toast{position:fixed;left:50%;bottom:34px;transform:translate(-50%,20px);z-index:200;padding:12px 20px;border-radius:13px;
+  background:var(--bg-soft);border:1px solid var(--border-2);box-shadow:var(--shadow);font-size:14px;font-weight:500;
+  display:flex;align-items:center;gap:10px;opacity:0;pointer-events:none;transition:.35s}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+#toast svg{width:16px;height:16px;color:var(--lime)}
+#totop{position:fixed;right:26px;bottom:26px;z-index:90;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;
+  background:var(--bg-soft);border:1px solid var(--border-2);box-shadow:var(--shadow);opacity:0;pointer-events:none;transform:translateY(10px);transition:.35s}
+#totop.show{opacity:1;pointer-events:auto;transform:none}
+#totop:hover{background:var(--grad);color:#fff;border-color:transparent}
+#totop svg{width:18px;height:18px}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div class="fx fx-grid"></div>
+<div class="fx"><span class="blob blob-1"></span><span class="blob blob-2"></span><span class="blob blob-3"></span></div>
+<div class="fx fx-noise"></div>
+<div id="spotlight"></div>
+
+<!-- ================= NAV ================= -->
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3l2.4 5.6L20 11l-5.6 2.4L12 19l-2.4-5.6L4 11l5.6-2.4z"/>
+        </svg>
+      </span>
+      <span>UI UX Pro Max<small data-ru="дизайн-интеллект" data-en="design intelligence"></small></span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#features" data-ru="Возможности" data-en="Features"></a>
+      <a href="#demo" data-ru="Демо" data-en="Demo"></a>
+      <a href="#palette" data-ru="Палитры" data-en="Palettes"></a>
+      <a href="#fonts" data-ru="Шрифты" data-en="Fonts"></a>
+      <a href="#install" data-ru="Установка" data-en="Install"></a>
+      <a href="#faq" data-ru="FAQ" data-en="FAQ"></a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button id="langRu" class="on" onclick="setLang('ru')">RU</button>
+        <button id="langEn" onclick="setLang('en')">EN</button>
+      </div>
+      <button class="icon-btn" id="themeBtn" aria-label="Toggle theme">
+        <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+        <svg id="iconSun" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
+      </button>
+      <a class="btn btn-primary btn-sm" href="#install" data-ru="Установить" data-en="Install"></a>
+      <button class="icon-btn burger" id="burger" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#features" data-ru="Возможности" data-en="Features"></a>
+    <a href="#demo" data-ru="Демо-поиск" data-en="Live demo"></a>
+    <a href="#palette" data-ru="Генератор палитр" data-en="Palette generator"></a>
+    <a href="#fonts" data-ru="Шрифтовые пары" data-en="Font pairings"></a>
+    <a href="#install" data-ru="Установка" data-en="Install"></a>
+    <a href="#faq" data-ru="FAQ" data-en="FAQ"></a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="pill reveal"><span class="dot"></span><b data-ru="v2.0" data-en="v2.0"></b>&nbsp;<span data-ru="открытый код · MIT · 0 зависимостей" data-en="open source · MIT · zero dependencies"></span></span>
+      <h1 class="reveal" style="--d:.06s">
+        <span class="line" data-ru="Скажи агенту «сделай красиво» —" data-en="Tell your agent “make it beautiful” —"></span>
+        <span class="line grad-text" data-ru="и он действительно сможет." data-en="and it actually will."></span>
+      </h1>
+      <p class="hero-sub reveal" style="--d:.12s">
+        <span data-ru="UI UX Pro Max — это поисковая база из 60+ UI-стилей, 97 палитр, 161 шрифтовой пары и UX-гайдлайнов. Одна команда в терминале — и Claude, Cursor или Windsurf проектируют как senior-дизайнер." data-en="UI UX Pro Max is a searchable database of 60+ UI styles, 97 palettes, 161 font pairings and UX guidelines. One terminal command and Claude, Cursor or Windsurf design like a senior designer."></span>
+      </p>
+      <div class="hero-cta reveal" style="--d:.18s">
+        <a class="btn btn-primary" href="#install">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l4-4m-4 4l-4-4M4 19h16"/></svg>
+          <span data-ru="Установить за 30 секунд" data-en="Install in 30 seconds"></span>
+        </a>
+        <a class="btn btn-ghost" href="#demo">
+          <span data-ru="Попробовать поиск" data-en="Try the search"></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0l-6-6m6 6l-6 6"/></svg>
+        </a>
+      </div>
+      <div class="hero-meta reveal" style="--d:.24s">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span data-ru="Работает офлайн" data-en="Works offline"></span></span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span data-ru="21 стек: React, Vue, Svelte, SwiftUI, Flutter…" data-en="21 stacks: React, Vue, Svelte, SwiftUI, Flutter…"></span></span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span data-ru="Без npm-зависимостей" data-en="No npm dependencies"></span></span>
+      </div>
+    </div>
+
+    <div class="reveal" style="--d:.2s">
+      <div class="term" data-tilt>
+        <div class="term-bar">
+          <span class="term-dots"><i></i><i></i><i></i></span>
+          <span class="term-title">ui-ux-pro-max — zsh</span>
+        </div>
+        <div class="term-body" id="termBody"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MARQUEE ================= -->
+<div class="marquee-sec">
+  <div class="wrap">
+    <p class="marquee-label reveal" data-ru="Работает с твоим AI-редактором" data-en="Works with your AI editor"></p>
+  </div>
+  <div class="marquee reveal">
+    <div class="marquee-track" id="marqueeTrack"></div>
+  </div>
+</div>
+
+<!-- ================= STATS ================= -->
+<section style="padding-top:56px">
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat reveal"><div class="stat-num"><span class="count" data-to="60">0</span><span>+</span></div><div class="stat-label" data-ru="UI-стилей с AI-промптами" data-en="UI styles with AI prompts"></div></div>
+      <div class="stat reveal" style="--d:.07s"><div class="stat-num"><span class="count" data-to="97">0</span></div><div class="stat-label" data-ru="цветовых палитр" data-en="color palettes"></div></div>
+      <div class="stat reveal" style="--d:.14s"><div class="stat-num"><span class="count" data-to="161">0</span></div><div class="stat-label" data-ru="шрифтовых пар Google Fonts" data-en="Google Fonts pairings"></div></div>
+      <div class="stat reveal" style="--d:.21s"><div class="stat-num"><span class="count" data-to="11">0</span></div><div class="stat-label" data-ru="доменов поиска" data-en="search domains"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">◆ <span data-ru="возможности" data-en="capabilities"></span></span>
+      <h2 data-ru="Всё, что нужно дизайнеру — в одном поиске" data-en="Everything a designer needs — in one search"></h2>
+      <p data-ru="Больше не нужно листать Dribbble и угадывать цвет. Спроси — получи стиль, палитру, шрифты, UX-правила и готовый код под свой стек." data-en="No more scrolling Dribbble and guessing colors. Ask — get style, palette, fonts, UX rules and production-ready code for your stack."></p>
+    </div>
+
+    <div class="bento">
+      <div class="card span3 reveal" data-tilt>
+        <span class="glow"></span>
+        <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
+        <h3 data-ru="Гибридный поиск BM25 + regex" data-en="Hybrid BM25 + regex search"></h3>
+        <p data-ru="Домен определяется автоматически: стиль, палитра, шрифты, чарты, иконки, UX или стек. Релевантность вместо угадайки." data-en="The domain is detected automatically: style, palette, fonts, charts, icons, UX or stack. Relevance instead of guesswork."></p>
+        <div class="tagrow"><span>--domain style</span><span>--domain color</span><span>--domain ux</span><span>--domain chart</span></div>
+      </div>
+
+      <div class="card span3 reveal" style="--d:.07s" data-tilt>
+        <span class="glow"></span>
+        <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg></div>
+        <h3 data-ru="Дизайн-система под задачу" data-en="A design system tuned to the task"></h3>
+        <p data-ru="Три ручки настройки — variance, motion, density — и движок сам подберёт стиль, анимации GSAP и шкалу отступов." data-en="Three dials — variance, motion, density — and the engine picks the style, GSAP animation tier and spacing scale for you."></p>
+        <div class="tagrow"><span>--variance 7</span><span>--motion 8</span><span>--density 4</span></div>
+      </div>
+
+      <div class="card span2 reveal" data-tilt>
+        <span class="glow"></span>
+        <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="19" cy="13" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="10" cy="20" r="2.5"/><path d="M12 2a10 10 0 100 20c1.4 0 2-1 2-2s-1-2-2-2h-1a3 3 0 010-6h6"/></svg></div>
+        <h3 data-ru="Палитры и шрифты" data-en="Palettes and fonts"></h3>
+        <p data-ru="97 готовых схем по типу продукта и 161 пара шрифтов с готовым @import." data-en="97 ready-made schemes per product type and 161 font pairs with ready-to-paste imports."></p>
+      </div>
+
+      <div class="card span2 reveal" style="--d:.07s" data-tilt>
+        <span class="glow"></span>
+        <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l9 4v6c0 5-3.8 8.6-9 10-5.2-1.4-9-5-9-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3 data-ru="UX без анти-паттернов" data-en="UX without anti-patterns"></h3>
+        <p data-ru="Контраст ≥ 4.5:1, размеры тапов, фокус-стейты, доступность — проверяется до того, как код попадёт в прод." data-en="Contrast ≥ 4.5:1, tap targets, focus states, accessibility — checked before the code ever reaches production."></p>
+      </div>
+
+      <div class="card span2 reveal" style="--d:.14s" data-tilt>
+        <span class="glow"></span>
+        <div class="card-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg></div>
+        <h3 data-ru="21 стек" data-en="21 stacks"></h3>
+        <p data-ru="html-tailwind, React, Next, Astro, Vue, Nuxt, Svelte, SwiftUI, Flutter, React Native, Three.js, Angular, Laravel…" data-en="html-tailwind, React, Next, Astro, Vue, Nuxt, Svelte, SwiftUI, Flutter, React Native, Three.js, Angular, Laravel…"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DEMO ================= -->
+<section id="demo">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">◆ <span data-ru="живое демо" data-en="live demo"></span></span>
+      <h2 data-ru="Поищи прямо здесь" data-en="Search it right here"></h2>
+      <p data-ru="Набери запрос или выбери готовый — увидишь, что именно вернёт движок твоему агенту." data-en="Type a query or pick a preset — see exactly what the engine returns to your agent."></p>
+    </div>
+
+    <div class="demo-shell reveal" style="--d:.08s">
+      <div class="demo-bar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="demoInput" type="text" data-placeholder-ru="напр. glassmorphism dashboard, brutalist, minimal…" data-placeholder-en="e.g. glassmorphism dashboard, brutalist, minimal…">
+        <span class="demo-hint">search.py --domain style</span>
+      </div>
+      <div class="chips" id="demoChips"></div>
+      <div class="results" id="demoResults"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PALETTE ================= -->
+<section id="palette">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">◆ <span data-ru="генератор палитр" data-en="palette generator"></span></span>
+      <h2 data-ru="Собери палитру за один клик" data-en="Build a palette in one click"></h2>
+      <p data-ru="Выбери гармонию — получи пять согласованных цветов с ролями и CSS-переменными. Клик по цвету копирует HEX." data-en="Pick a harmony — get five coordinated colors with roles and CSS variables. Click a swatch to copy its HEX."></p>
+    </div>
+
+    <div class="pal-controls reveal">
+      <button class="chip on" data-harmony="analogous" data-ru="Аналоговая" data-en="Analogous"></button>
+      <button class="chip" data-harmony="complementary" data-ru="Комплементарная" data-en="Complementary"></button>
+      <button class="chip" data-harmony="triadic" data-ru="Триада" data-en="Triadic"></button>
+      <button class="chip" data-harmony="mono" data-ru="Монохром" data-en="Monochromatic"></button>
+      <button class="btn btn-ghost btn-sm" id="palRandom" style="margin-left:auto">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+        <span data-ru="Случайная палитра" data-en="Random palette"></span>
+      </button>
+    </div>
+
+    <div class="pal-grid reveal" id="palGrid" style="--d:.06s"></div>
+    <div class="pal-code reveal" style="--d:.12s">
+      <span id="palCode"></span>
+      <button class="btn btn-ghost btn-sm" id="palCopy">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>
+        <span data-ru="Копировать CSS" data-en="Copy CSS"></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FONTS ================= -->
+<section id="fonts">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">◆ <span data-ru="шрифтовые пары" data-en="font pairings"></span></span>
+      <h2 data-ru="Шрифт, который делает продукт дорогим" data-en="The typography that makes a product look premium"></h2>
+      <p data-ru="База хранит 161 пару с готовым @import из Google Fonts и рекомендацией по использованию — просто скажи агенту, какой вайб нужен." data-en="The database stores 161 pairs with ready-to-paste Google Fonts imports and usage guidance — just tell your agent the vibe you need."></p>
+    </div>
+
+    <div class="fonts-grid">
+      <div class="font-card fc1 reveal" data-tilt>
+        <div class="font-aa">Aa</div>
+        <div class="font-name">Space Grotesk <span style="color:var(--faint)">+</span> Inter</div>
+        <div class="font-role" data-ru="SaaS · дашборды · стартапы" data-en="SaaS · dashboards · startups"></div>
+        <div class="font-sample" data-ru="Геометричный гротеск для интерфейсов: цифры не прыгают, заголовки держат сетку." data-en="A geometric sans for interfaces: figures don't jitter, headlines keep the grid."></div>
+        <div class="font-tags"><span>--font-display</span><span>--font-body</span><span>Google Fonts</span></div>
+      </div>
+      <div class="font-card fc2 reveal" style="--d:.07s" data-tilt>
+        <div class="font-aa">Aa</div>
+        <div class="font-name">Playfair Display <span style="color:var(--faint)">+</span> Inter</div>
+        <div class="font-role" data-ru="редакции · люкс · лендинги" data-en="editorial · luxury · landing"></div>
+        <div class="font-sample" data-ru="Высокий контраст и курсив — мгновенное ощущение журнала и дорогого бренда." data-en="High contrast and italics — an instant magazine feel for premium brands."></div>
+        <div class="font-tags"><span>h1 / hero</span><span>italic accent</span><span>serif</span></div>
+      </div>
+      <div class="font-card fc3 reveal" style="--d:.14s" data-tilt>
+        <div class="font-aa">Aa</div>
+        <div class="font-name">JetBrains Mono <span style="color:var(--faint)">+</span> Inter</div>
+        <div class="font-role" data-ru="devtools · CLI · документация" data-en="devtools · CLI · docs"></div>
+        <div class="font-sample" data-ru="Лигатуры и равн ширина: код, метрики и терминальные блоки выглядят как родные." data-en="Ligatures and fixed width: code, metrics and terminal blocks feel native."></div>
+        <div class="font-tags"><span>code</span><span>numbers</span><span>mono</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= INSTALL ================= -->
+<section id="install">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">◆ <span data-ru="установка" data-en="install"></span></span>
+      <h2 data-ru="Три шага до идеального дизайна" data-en="Three steps to a flawless design"></h2>
+      <p data-ru="Никакого бэкенда и сборки: поисковый движок — обычный Python-скрипт без зависимостей." data-en="No backend, no build step: the search engine is a dependency-free Python script."></p>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal"><div class="step-n">1</div><h4 data-ru="Установи скилл" data-en="Install the skill"></h4><p data-ru="Один npx-командой — и база подключается к Claude Code, Cursor, Windsurf или Cline." data-en="A single npx command wires the database into Claude Code, Cursor, Windsurf or Cline."></p></div>
+      <div class="step reveal" style="--d:.07s"><div class="step-n">2</div><h4 data-ru="Спроси на человеческом" data-en="Ask in plain language"></h4><p data-ru="«Сделай тёмный дашборд для финтеха в стиле glassmorphism» — без промпт-инжиниринга." data-en="“Build a dark glassmorphism fintech dashboard” — no prompt engineering required."></p></div>
+      <div class="step reveal" style="--d:.14s"><div class="step-n">3</div><h4 data-ru="Получи готовый код" data-en="Get production code"></h4><p data-ru="Стиль, палитра, шрифты, UX-правила и сниппет анимации — сразу под твой стек." data-en="Style, palette, fonts, UX rules and an animation snippet — straight into your stack."></p></div>
+    </div>
+
+    <div class="code-box reveal" style="--d:.1s">
+      <div class="code-tabs" id="codeTabs">
+        <button class="on" data-tab="0">npx</button>
+        <button data-tab="1">python3</button>
+        <button data-tab="2">--design-system</button>
+        <button data-tab="3">--stack</button>
+      </div>
+      <div class="code-body">
+        <button class="copy-btn" id="codeCopy">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>
+          <span data-ru="Копировать" data-en="Copy"></span>
+        </button>
+        <pre id="codePre"></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">◆ <span data-ru="вопросы" data-en="questions"></span></span>
+      <h2 data-ru="Частые вопросы" data-en="Frequently asked"></h2>
+    </div>
+    <div class="faq" id="faqList"></div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section style="padding-top:20px">
+  <div class="wrap">
+    <div class="cta reveal">
+      <h2 data-ru="Твой следующий проект заслуживает хорошего дизайна" data-en="Your next project deserves a great design"></h2>
+      <p data-ru="Поставь скилл, спроси — и сравни результат с «до»." data-en="Install the skill, ask — and compare the result with “before”."></p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+        <a class="btn btn-primary" href="#install" style="height:50px;padding:0 28px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l4-4m-4 4l-4-4M4 19h16"/></svg>
+          <span data-ru="Установить UI UX Pro Max" data-en="Install UI UX Pro Max"></span>
+        </a>
+        <a class="btn btn-ghost" href="#demo" style="height:50px;padding:0 28px" data-ru="Сначала демо" data-en="Demo first"></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a class="brand" href="#top" style="margin-bottom:16px">
+          <span class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.4 5.6L20 11l-5.6 2.4L12 19l-2.4-5.6L4 11l5.6-2.4z"/></svg>
+          </span>
+          <span>UI UX Pro Max<small data-ru="дизайн-интеллект" data-en="design intelligence"></small></span>
+        </a>
+        <p style="color:var(--muted);font-size:14.2px;max-width:300px" data-ru="Открытая база дизайн-решений для AI-ассистентов. MIT-лицензия, без зависимостей, работает офлайн." data-en="An open design-intelligence database for AI assistants. MIT licensed, dependency-free, works offline."></p>
+      </div>
+      <div>
+        <h5 data-ru="Продукт" data-en="Product"></h5>
+        <a href="#features" data-ru="Возможности" data-en="Features"></a>
+        <a href="#demo" data-ru="Демо-поиск" data-en="Live demo"></a>
+        <a href="#palette" data-ru="Палитры" data-en="Palettes"></a>
+        <a href="#fonts" data-ru="Шрифты" data-en="Fonts"></a>
+      </div>
+      <div>
+        <h5 data-ru="Ресурсы" data-en="Resources"></h5>
+        <a href="#install" data-ru="Установка" data-en="Install"></a>
+        <a href="#faq" data-ru="FAQ" data-en="FAQ"></a>
+        <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com" target="_blank" rel="noopener">Changelog</a>
+      </div>
+      <div>
+        <h5 data-ru="Домены" data-en="Domains"></h5>
+        <a href="#demo">style</a><a href="#palette">color</a><a href="#fonts">typography</a><a href="#features">ux</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> UI UX Pro Max · <span data-ru="сделано с" data-en="made with"></span> <span class="heart">♥</span> <span data-ru="и 60+ стилями" data-en="and 60+ styles"></span></span>
+      <span class="mono" style="font-size:12px">MIT License</span>
+    </div>
+  </div>
+</footer>
+
+<button id="totop" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5m0 0l-6 6m6-6l6 6"/></svg>
+</button>
+
+<div id="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span id="toastMsg"></span></div>
+
+<script>
+(function(){
+"use strict";
+const $=(s,c)=>(c||document).querySelector(s);
+const $$=(s,c)=>Array.from((c||document).querySelectorAll(s));
+const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const store={get(k,d){try{const v=localStorage.getItem(k);return v===null?d:v}catch(e){return d}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+/* ---------- i18n ---------- */
+let LANG=store.get('uixm-lang','ru');
+function setLang(lang){
+  LANG=lang;store.set('uixm-lang',lang);
+  document.documentElement.lang=lang;
+  $('#langRu').classList.toggle('on',lang==='ru');
+  $('#langEn').classList.toggle('on',lang==='en');
+  $$('[data-ru]').forEach(el=>{
+    const v=lang==='en'?(el.dataset.en||el.dataset.ru):el.dataset.ru;
+    if(v)el.textContent=v;
+  });
+  $$('[data-placeholder-ru]').forEach(el=>{
+    el.placeholder=lang==='en'?(el.dataset.placeholderEn||''):(el.dataset.placeholderRu||'');
+  });
+  renderDemo();
+  renderFaq();
+  renderPalette();
+  renderCode(activeTab);
+  updateSwatchesLang();
+}
+window.setLang=setLang;
+
+/* ---------- theme ---------- */
+function setTheme(t){
+  document.documentElement.dataset.theme=t;store.set('uixm-theme',t);
+  $('#iconMoon').style.display=t==='dark'?'block':'none';
+  $('#iconSun').style.display=t==='dark'?'none':'block';
+}
+setTheme(store.get('uixm-theme','dark'));
+$('#themeBtn').addEventListener('click',()=>{
+  setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark');
+});
+
+/* ---------- nav ---------- */
+const nav=$('#nav');
+addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',scrollY>10);
+  $('#totop').classList.toggle('show',scrollY>700);
+  const h=document.documentElement.scrollHeight-innerHeight;
+  $('#progress').style.width=(h>0?(scrollY/h*100):0)+'%';
+},{passive:true});
+$('#burger').addEventListener('click',()=>$('#mobileMenu').classList.toggle('open'));
+$$('#mobileMenu a').forEach(a=>a.addEventListener('click',()=>$('#mobileMenu').classList.remove('open')));
+$('#totop').addEventListener('click',()=>scrollTo({top:0,behavior:reduceMotion?'auto':'smooth'}));
+$('#year').textContent=new Date().getFullYear();
+
+/* ---------- spotlight ---------- */
+if(matchMedia('(pointer:fine)').matches){
+  const sp=$('#spotlight');
+  addEventListener('pointermove',e=>{
+    sp.style.opacity=1;sp.style.left=e.clientX+'px';sp.style.top=e.clientY+'px';
+  },{passive:true});
+}
+
+/* ---------- reveal ---------- */
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+},{threshold:.12,rootMargin:'0px 0px -40px'});
+function observeReveals(){$$('.reveal:not(.in)').forEach(el=>io.observe(el))}
+observeReveals();
+
+/* ---------- counters ---------- */
+const cio=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting)return;cio.unobserve(e.target);
+    const el=e.target,to=+el.dataset.to,t0=performance.now(),dur=1400;
+    (function tick(t){
+      const p=Math.min(1,(t-t0)/dur),v=Math.round(to*(1-Math.pow(1-p,3)));
+      el.textContent=v;if(p<1)requestAnimationFrame(tick);
+    })(t0);
+  });
+},{threshold:.5});
+$$('.count').forEach(el=>cio.observe(el));
+
+/* ---------- scrollspy ---------- */
+const links=$$('#navLinks a');
+const spy=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id));
+    }
+  });
+},{rootMargin:'-45% 0px -50%'});
+['features','demo','palette','fonts','install','faq'].forEach(id=>{const s=document.getElementById(id);if(s)spy.observe(s)});
+
+/* ---------- tilt ---------- */
+if(!reduceMotion&&matchMedia('(pointer:fine)').matches){
+  $$('[data-tilt]').forEach(card=>{
+    card.addEventListener('pointermove',e=>{
+      const r=card.getBoundingClientRect();
+      const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      card.style.transform=`perspective(900px) rotateY(${x*5}deg) rotateX(${-y*5}deg) translateY(-3px)`;
+    });
+    card.addEventListener('pointerleave',()=>{card.style.transform=''});
+  });
+}
+
+/* ---------- terminal typing ---------- */
+const TERM_CMD='python3 src/ui-ux-pro-max/scripts/search.py "glassmorphism saas" --domain style';
+const TERM_OUT=[
+  '<span class="tag">▸ STYLE</span>  <span class="name">Glassmorphism</span>            <span class="num">0.94</span>',
+  '  <span class="dim">prompt: frosted glass cards, backdrop-blur, vivid gradient mesh, 1px light borders</span>',
+  '<span class="tag">▸ STYLE</span>  <span class="name">Aurora Gradient Mesh</span>       <span class="num">0.81</span>',
+  '<span class="tag">▸ COLOR</span>  <span class="name">Neon Night</span>                 <span class="num">0.76</span>',
+  '<span class="tag">▸ UX</span>     <span class="ok">contrast ≥ 4.5:1 · blur ≥ 12px · tap ≥ 44px</span>',
+  '<span class="dim">4 results in 38ms — passed to agent ✓</span>'
+];
+function runTerminal(){
+  const body=$('#termBody');if(!body)return;
+  body.innerHTML='<div><span class="ps1">$</span> <span class="cmd" id="termCmd"></span><span class="cursor" id="termCur"></span></div>';
+  const cmdEl=$('#termCmd'),cur=$('#termCur');
+  if(reduceMotion){
+    cmdEl.textContent=TERM_CMD;cur.style.display='none';
+    TERM_OUT.forEach(h=>{const d=document.createElement('div');d.className='tline show';d.innerHTML=h;body.appendChild(d)});
+    return;
+  }
+  let i=0;
+  (function type(){
+    if(i<TERM_CMD.length){cmdEl.textContent+=TERM_CMD[i++];setTimeout(type,26+Math.random()*34);}
+    else{cur.style.display='none';TERM_OUT.forEach((h,k)=>setTimeout(()=>{
+      const d=document.createElement('div');d.className='tline';d.innerHTML=h;body.appendChild(d);
+      requestAnimationFrame(()=>d.classList.add('show'));
+    },260+k*230));}
+  })();
+}
+const tio=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){tio.disconnect();setTimeout(runTerminal,500)}})},{threshold:.3});
+tio.observe($('#termBody'));
+
+/* ---------- marquee ---------- */
+const EDITORS=['Claude Code','Cursor','Windsurf','Cline','Continue','Zed','VS Code','JetBrains AI','GitHub Copilot','Aider','OpenHands','Kiro'];
+(function(){
+  const track=$('#marqueeTrack');
+  const set=EDITORS.map(n=>'<span class="chip-logo"><i></i>'+n+'</span>').join('');
+  track.innerHTML=set+set;
+})();
+
+/* ---------- demo search ---------- */
+const STYLES=[
+  {n:'Glassmorphism',k:['glass','blur','frosted','saas','dashboard'],m:96,
+   p:'frosted glass cards, backdrop-filter blur(18px), 1px white borders, vivid gradient mesh background',
+   c:['#7c5cff','#22d3ee','#0b0b18'],
+   ru:'Полупрозрачные слои с размытием — идеально для дашбордов и SaaS-панелей.',
+   en:'Translucent blurred layers — perfect for dashboards and SaaS panels.'},
+  {n:'Minimalism',k:['minimal','clean','white','portfolio','saas'],m:93,
+   p:'generous whitespace, 2 colors max, thin 1px dividers, no shadows, strict 8pt grid',
+   c:['#111111','#fafafa','#8a8a8a'],
+   ru:'Много воздуха, два цвета и строгая сетка. Никогда не выходит из моды.',
+   en:'Lots of air, two colors and a strict grid. Never goes out of style.'},
+  {n:'Brutalism',k:['brutalist','raw','bold','portfolio','agency'],m:89,
+   p:'raw borders, 3px black outlines, system mono type, harsh contrast, no border-radius',
+   c:['#ff4d00','#000000','#fff700'],
+   ru:'Сырые рамки, грубые бордеры и системный шрифт. Крик о смелости.',
+   en:'Raw frames, harsh borders and system type. A loud statement of boldness.'},
+  {n:'Aurora Gradient Mesh',k:['aurora','gradient','mesh','glow','saas','hero'],m:87,
+   p:'animated aurora blobs, conic gradient mesh, soft glow, dark canvas #06060b',
+   c:['#8b5cf6','#e879f9','#22d3ee'],
+   ru:'Живые градиентные пятна на тёмном фоне — тренд премиальных лендингов.',
+   en:'Living gradient blobs on a dark canvas — the premium landing trend.'},
+  {n:'Claymorphism',k:['clay','soft','pastel','playful','mobile'],m:84,
+   p:'soft clay cards, pastel gradients, double inner shadows, 24px radius, puffy 3d buttons',
+   c:['#ffb3c7','#c7b3ff','#b3ffd9'],
+   ru:'Мягкие «пластилиновые» карточки и пастель — дружелюбный продукт.',
+   en:'Soft clay cards and pastels — a friendly, approachable product.'},
+  {n:'Neumorphism',k:['neu','soft ui','emboss','light'],m:78,
+   p:'monochrome background, dual light/shadow emboss, low contrast, 16px radius',
+   c:['#e8ecf3','#ffffff','#c5cbd6'],
+   ru:'Мягкая тиснёная объемность на однотонном фоне.',
+   en:'Soft embossed depth on a flat monochrome surface.'},
+  {n:'Swiss Typography',k:['swiss','grid','editorial','typography','print'],m:82,
+   p:'strict grid, Helvetica-style grotesk, red accent, left-aligned, no decoration',
+   c:['#e2231a','#111111','#ffffff'],
+   ru:'Сетка, гротеск и один красный акцент. Классика, которая работает.',
+   en:'Grid, grotesk and a single red accent. A classic that just works.'},
+  {n:'Y2K Retro',k:['y2k','retro','chrome','fun','gen-z'],m:75,
+   p:'chrome gradients, star sparkles, pixel borders, iridescent stickers, bubbly type',
+   c:['#c0c8ff','#ff9de2','#00e5ff'],
+   ru:'Хром, звёздочки и пиксельные рамки — для молодой аудитории.',
+   en:'Chrome, sparkles and pixel frames — built for a young audience.'},
+  {n:'Dark Mode Pro',k:['dark','night','pro','dashboard','devtool'],m:91,
+   p:'deep #0a0a13 canvas, elevated surfaces, neon accents, subtle noise texture',
+   c:['#0a0a13','#8b5cf6','#22d3ee'],
+   ru:'Глубокий тёмный интерфейс с неоновыми акцентами и зерном.',
+   en:'Deep dark interface with neon accents and a subtle grain.'},
+  {n:'Bento Grid',k:['bento','grid','cards','apple','saas'],m:86,
+   p:'asymmetric bento cards, 20px radius, mixed spans, soft shadow, sticky feature cell',
+   c:['#f5f5f7','#0071e3','#1d1d1f'],
+   ru:'Асимметричные карточки-бенто — тренд продуктовых лендингов.',
+   en:'Asymmetric bento cards — the product-landing trend.'}
+];
+const PRESETS=[
+  {ru:'glassmorphism dashboard',en:'glassmorphism dashboard'},
+  {ru:'минимализм',en:'minimal portfolio'},
+  {ru:'brutalist',en:'brutalist agency'},
+  {ru:'тёмная тема',en:'dark mode devtool'},
+  {ru:'bento grid',en:'bento grid saas'}
+];
+let activeChip=-1;
+function esc(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function renderChips(){
+  $('#demoChips').innerHTML=PRESETS.map((p,i)=>
+    '<button class="chip'+(i===activeChip?' on':'')+'" data-i="'+i+'">'+esc(LANG==='en'?p.en:p.ru)+'</button>').join('');
+  $$('#demoChips .chip').forEach(b=>b.addEventListener('click',()=>{
+    activeChip=+b.dataset.i;
+    $('#demoInput').value=LANG==='en'?PRESETS[activeChip].en:PRESETS[activeChip].ru;
+    runSearch($('#demoInput').value);
+  }));
+}
+function runSearch(q){
+  const box=$('#demoResults');
+  const term=q.trim().toLowerCase();
+  box.innerHTML='<div class="skel"><i></i><i></i></div><div class="skel"><i></i><i></i></div><div class="skel"><i></i></div>';
+  setTimeout(()=>{
+    const words=term.split(/\s+/).filter(Boolean);
+    const scored=STYLES.map(s=>{
+      let sc=0;
+      words.forEach(w=>{
+        if(s.n.toLowerCase().includes(w))sc+=60;
+        s.k.forEach(k=>{if(k.includes(w))sc+=k===w?34:18});
+        if(s.p.toLowerCase().includes(w))sc+=10;
+      });
+      return {s,sc};
+    }).filter(x=>x.sc>0).sort((a,b)=>b.sc-a.sc).slice(0,5);
+    if(!scored.length){
+      box.innerHTML='<div class="empty">'+(LANG==='en'
+        ?'No matches — try “glass”, “dark”, “bento” or “brutalist”.'
+        :'Ничего не найдено — попробуй «glass», «dark», «bento» или «brutalist».')+'</div>';
+      return;
+    }
+    box.innerHTML=scored.map((x,i)=>{
+      const s=x.s;
+      return '<div class="res" style="animation-delay:'+(i*60)+'ms">'
+        +'<div class="res-swatch">'+s.c.map(c=>'<i style="background:'+c+'"></i>').join('')+'</div>'
+        +'<div><div class="res-name">'+esc(s.n)+'<span class="res-match">'+Math.min(99,s.m+Math.round(x.sc/40))+'%</span></div>'
+        +'<div class="res-desc">'+esc(LANG==='en'?s.en:s.ru)+'</div>'
+        +'<div class="res-prompt">'+esc(s.p)+'</div></div>'
+        +'<div class="res-match" style="opacity:.55">style</div></div>';
+    }).join('');
+  },reduceMotion?0:380);
+}
+function renderDemo(){renderChips();runSearch(LANG==='en'?'glassmorphism dashboard':'glassmorphism dashboard')}
+let deb;
+$('#demoInput').addEventListener('input',e=>{
+  activeChip=-1;renderChips();
+  clearTimeout(deb);deb=setTimeout(()=>runSearch(e.target.value),240);
+});
+renderDemo();
+
+/* ---------- palette generator ---------- */
+const ROLES=[
+  {ru:'фон',en:'background'},{ru:'поверхность',en:'surface'},{ru:'акцент',en:'accent'},
+  {ru:'вторичный',en:'secondary'},{ru:'текст',en:'text'}
+];
+let harmony='analogous',baseHue=262;
+function hslHex(h,s,l){
+  s/=100;l/=100;
+  const k=n=>(n+h/30)%12,a=s*Math.min(l,1-l),
+    f=n=>l-a*Math.max(-1,Math.min(k(n)-3,Math.min(9-k(n),1)));
+  const to=x=>Math.round(255*x).toString(16).padStart(2,'0');
+  return '#'+to(f(0))+to(f(8))+to(f(4));
+}
+function genPalette(){
+  let hs=[];
+  if(harmony==='analogous')hs=[baseHue,baseHue+26,baseHue+52,baseHue-26,baseHue+210];
+  else if(harmony==='complementary')hs=[baseHue,baseHue+18,baseHue+180,baseHue+200,baseHue+36];
+  else if(harmony==='triadic')hs=[baseHue,baseHue+120,baseHue+240,baseHue+20,baseHue+200];
+  else hs=[baseHue,baseHue,baseHue,baseHue,baseHue];
+  const specs=[
+    {s:46,l:8},{s:38,l:15},{s:82,l:60},{s:70,l:74},{s:22,l:92}
+  ];
+  if(harmony==='mono')specs[2].l=48,specs[3].l=66;
+  return hs.map((h,i)=>hslHex(h+ (harmony==='mono'?i*4:0),specs[i].s,specs[i].l));
+}
+function renderPalette(){
+  const pal=genPalette();
+  $('#palGrid').innerHTML=pal.map((c,i)=>
+    '<div class="sw" data-hex="'+c+'"><div class="sw-color" style="background:'+c+'"></div>'
+    +'<div class="sw-meta"><span class="sw-hex">'+c.toUpperCase()+'</span>'
+    +'<span class="sw-role">'+ROLES[i][LANG]+'</span></div></div>').join('');
+  $$('#palGrid .sw').forEach(el=>el.addEventListener('click',()=>copy(el.dataset.hex,LANG==='en'?el.dataset.hex+' copied':el.dataset.hex+' скопирован')));
+  $('#palCode').innerHTML='<b>:root</b> { '+pal.map((c,i)=>'--color-'+(['bg','surface','accent','accent-2','text'])[i]+': '+c+';').join(' ')+' }';
+  $('#palCode').dataset.css=':root {\n'+pal.map((c,i)=>'  --color-'+(['bg','surface','accent','accent-2','text'])[i]+': '+c+';').join('\n')+'\n}';
+}
+function updateSwatchesLang(){renderPalette()}
+$$('.pal-controls [data-harmony]').forEach(b=>b.addEventListener('click',()=>{
+  $$('.pal-controls [data-harmony]').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');harmony=b.dataset.harmony;renderPalette();
+}));
+$('#palRandom').addEventListener('click',()=>{baseHue=Math.random()*360;renderPalette()});
+$('#palCopy').addEventListener('click',()=>copy($('#palCode').dataset.css,LANG==='en'?'CSS variables copied':'CSS-переменные скопированы'));
+renderPalette();
+
+/* ---------- code tabs ---------- */
+const CODE=[
+  {c:'<span class="c"># установка скилла в Claude Code / Cursor / Windsurf / Cline</span>\n<span class="k">npx</span> ui-ux-pro-max-cli <span class="f">init</span>'},
+  {c:'<span class="c"># прямой поиск по базе — python3, без зависимостей</span>\n<span class="k">python3</span> src/ui-ux-pro-max/scripts/search.py <span class="s">"dark saas dashboard"</span> <span class="f">--domain</span> style <span class="f">-n</span> 3'},
+  {c:'<span class="c"># дизайн-система с ручками настройки</span>\n<span class="k">python3</span> src/ui-ux-pro-max/scripts/search.py <span class="s">"fintech app"</span> \\\n  <span class="f">--design-system</span> <span class="f">--variance</span> 7 <span class="f">--motion</span> 8 <span class="f">--density</span> 4'},
+  {c:'<span class="c"># гайдлайны под конкретный стек</span>\n<span class="k">python3</span> src/ui-ux-pro-max/scripts/search.py <span class="s">"hero section"</span> <span class="f">--stack</span> html-tailwind'}
+];
+const CODE_RAW=CODE.map(x=>x.c.replace(/<[^>]+>/g,'').replace(/&quot;/g,'"').replace(/&amp;/g,'&'));
+let activeTab=0;
+function renderCode(i){
+  activeTab=i;
+  $$('#codeTabs button').forEach((b,k)=>b.classList.toggle('on',k===i));
+  $('#codePre').innerHTML=CODE[i].c;
+}
+$$('#codeTabs button').forEach(b=>b.addEventListener('click',()=>renderCode(+b.dataset.tab)));
+$('#codeCopy').addEventListener('click',()=>copy(CODE_RAW[activeTab],LANG==='en'?'Command copied':'Команда скопирована'));
+renderCode(0);
+
+/* ---------- faq ---------- */
+const FAQ=[
+  {q:{ru:'Это работает с моим редактором?',en:'Does it work with my editor?'},
+   a:{ru:'Да. Скилл ставится один раз и подхватывается Claude Code, Cursor, Windsurf, Cline, Continue и другими ассистентами, которые умеют читать файлы скиллов. База — обычные CSV, движок — Python-скрипт.',
+      en:'Yes. The skill installs once and is picked up by Claude Code, Cursor, Windsurf, Cline, Continue and other assistants that read skill files. The database is plain CSV and the engine is a Python script.'}},
+  {q:{ru:'Нужен ли интернет?',en:'Do I need an internet connection?'},
+   a:{ru:'Нет. Вся база и поисковый движок работают локально и офлайн. Интернет нужен только для загрузки шрифтов с Google Fonts, если ты используешь рекомендованные пары.',
+      en:'No. The whole database and the search engine run locally and offline. Internet is only needed to load fonts from Google Fonts when you use the recommended pairs.'}},
+  {q:{ru:'Можно использовать в коммерческих проектах?',en:'Can I use it in commercial projects?'},
+   a:{ru:'Конечно — проект под MIT-лицензией. Бери, меняй, встраивай во внутренние тулзы компании без ограничений.',
+      en:'Absolutely — the project is MIT licensed. Take it, fork it, embed it in internal company tools, no strings attached.'}},
+  {q:{ru:'Чем это отличается от готового UI-кита?',en:'How is this different from a UI kit?'},
+   a:{ru:'UI-кит даёт компоненты. UI UX Pro Max даёт решения: стиль под задачу, палитру, шрифтовую пару, UX-правила и анти-паттерны — и объясняет агенту, как их применить в твоём стеке.',
+      en:'A UI kit gives you components. UI UX Pro Max gives you decisions: a style for the task, a palette, a font pair, UX rules and anti-patterns — and tells your agent how to apply them in your stack.'}},
+  {q:{ru:'Как обновляется база?',en:'How is the database updated?'},
+   a:{ru:'Источник правды — папка src/ui-ux-pro-max/data. После правки CSV запусти npm run sync:assets, и копии в cli/assets и .claude/skills обновятся автоматически.',
+      en:'The source of truth is src/ui-ux-pro-max/data. After editing a CSV, run npm run sync:assets and the copies in cli/assets and .claude/skills update automatically.'}}
+];
+function renderFaq(){
+  $('#faqList').innerHTML=FAQ.map((f,i)=>
+    '<div class="qa'+(i===0?' open':'')+'"><button class="qa-q">'+esc(LANG==='en'?f.q.en:f.q.ru)
+    +'<span class="plus"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button>'
+    +'<div class="qa-a"><div><p>'+esc(LANG==='en'?f.a.en:f.a.ru)+'</p></div></div></div>').join('');
+  $$('#faqList .qa-q').forEach(b=>b.addEventListener('click',()=>{
+    const qa=b.parentElement,was=qa.classList.contains('open');
+    $$('#faqList .qa').forEach(x=>x.classList.remove('open'));
+    if(!was)qa.classList.add('open');
+  }));
+}
+renderFaq();
+
+/* ---------- copy + toast ---------- */
+let toastT;
+function copy(text,msg){
+  const done=()=>toast(msg);
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(done).catch(()=>fallbackCopy(text,done));
+  }else fallbackCopy(text,done);
+}
+function fallbackCopy(text,done){
+  const ta=document.createElement('textarea');
+  ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy')}catch(e){}
+  document.body.removeChild(ta);done();
+}
+function toast(msg){
+  $('#toastMsg').textContent=msg;
+  $('#toast').classList.add('show');
+  clearTimeout(toastT);toastT=setTimeout(()=>$('#toast').classList.remove('show'),2200);
+}
+
+/* ---------- init ---------- */
+setLang(LANG);
+observeReveals();
+})();
+</script>
+</body>
+</html>
